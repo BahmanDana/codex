@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سامانه نوبت‌دهی و اعلام بار</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="brand">
+        <span>شرکت حمل‌ونقل</span>
+        <strong>سامانه نوبت‌دهی</strong>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-btn active" data-view="driver">پنل راننده</button>
+        <button class="nav-btn" data-view="admin">پنل ادمین</button>
+      </div>
+    </nav>
+    <header class="hero">
+      <div>
+        <p class="badge">سامانه یکپارچه نوبت‌دهی</p>
+        <h1>اعلام بار و مدیریت نوبت تریلی</h1>
+        <p>
+          راننده‌ها نوبت خود را ثبت می‌کنند و تیم عملیاتی به‌صورت متمرکز
+          درخواست‌ها، تعداد بار و وضعیت نوبت را مدیریت می‌کند.
+        </p>
+      </div>
+      <div class="hero-card">
+        <h2>وضعیت امروز</h2>
+        <ul>
+          <li><span id="today-count">0</span> نوبت ثبت شده</li>
+          <li><span id="pending-count">0</span> نوبت در انتظار تأیید</li>
+          <li><span id="total-loads">0</span> بار ثبت شده</li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel" aria-labelledby="driver-panel-title" data-panel="driver">
+        <div class="panel-header">
+          <h2 id="driver-panel-title">ثبت نوبت راننده</h2>
+          <p>
+            لطفاً اطلاعات زیر را تکمیل کنید تا نوبت شما در صف بارگیری ثبت شود.
+          </p>
+        </div>
+        <form id="appointment-form" class="grid-form">
+          <label>
+            نام راننده
+            <input type="text" name="driverName" required placeholder="مثلاً علی محمدی" />
+          </label>
+          <label>
+            شماره تماس
+            <input type="tel" name="phone" required placeholder="09xxxxxxxxx" />
+          </label>
+          <label>
+            پلاک تریلی
+            <input type="text" name="plate" required placeholder="12الف345" />
+          </label>
+          <label>
+            نوع بار
+            <input type="text" name="cargoType" required placeholder="مثلاً سیمان" />
+          </label>
+          <label>
+            تاریخ و ساعت پیشنهادی
+            <input type="datetime-local" name="slot" required />
+          </label>
+          <label>
+            توضیحات تکمیلی
+            <textarea name="notes" rows="3" placeholder="مثلاً نیاز به باسکول خاص"></textarea>
+          </label>
+          <button type="submit" class="primary">ثبت نوبت</button>
+        </form>
+        <div id="driver-success" class="success" role="status" hidden>
+          نوبت شما با موفقیت ثبت شد. کد پیگیری شما:
+          <strong id="tracking-code">—</strong>
+        </div>
+        <div class="tracking">
+          <h3>پیگیری نوبت</h3>
+          <p>کد پیگیری یا شماره تماس خود را وارد کنید تا وضعیت نوبت را ببینید.</p>
+          <form id="tracking-form" class="tracking-form">
+            <input
+              type="text"
+              name="trackingValue"
+              placeholder="کد پیگیری یا شماره تماس"
+              required
+            />
+            <button type="submit" class="secondary">نمایش وضعیت</button>
+          </form>
+          <div id="tracking-result" class="tracking-result" hidden></div>
+        </div>
+      </section>
+
+      <section class="panel admin" aria-labelledby="admin-panel-title" data-panel="admin" hidden>
+        <div class="panel-header">
+          <h2 id="admin-panel-title">پنل ادمین</h2>
+          <p>
+            در این بخش نوبت‌های ثبت شده را مشاهده کنید، تعداد بار را ثبت و وضعیت
+            را بروزرسانی کنید.
+          </p>
+        </div>
+        <div class="admin-toolbar">
+          <input
+            type="search"
+            id="search-input"
+            placeholder="جستجو بر اساس نام راننده یا پلاک"
+          />
+          <select id="status-filter">
+            <option value="">همه وضعیت‌ها</option>
+            <option value="pending">در انتظار تأیید</option>
+            <option value="confirmed">تأیید شده</option>
+            <option value="completed">انجام شده</option>
+          </select>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>راننده</th>
+                <th>پلاک</th>
+                <th>کد پیگیری</th>
+                <th>زمان</th>
+                <th>نوع بار</th>
+                <th>تعداد بار</th>
+                <th>وضعیت</th>
+                <th>اقدامات</th>
+              </tr>
+            </thead>
+            <tbody id="appointments-body"></tbody>
+          </table>
+        </div>
+        <div id="empty-state" class="empty" hidden>
+          هنوز نوبتی ثبت نشده است.
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2024 سامانه نوبت‌دهی و اعلام بار شرکت حمل‌ونقل</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
